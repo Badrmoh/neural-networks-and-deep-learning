@@ -31,10 +31,26 @@ class Network(object):
         ever used in computing the outputs from later layers."""
         self.num_layers = len(sizes)
         self.sizes = sizes
-        self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
+        self.biases = [np.random.randn(y, 1) for y in sizes[1:]]    #Array of biases for each layer
         self.weights = [np.random.randn(y, x)
-                        for x, y in zip(sizes[:-1], sizes[1:])]
-
+                        for x, y in zip(sizes[:-1], sizes[1:])]     #Array of matricies of weights for each layer
+                                           
+        """
+        zip function makes up tuples by combining elements from each list. 
+        Ex: First tuble consists of first element of first list with first element of second list, and so on. 
+        In this case, sizes[-1:] leaves out first element and has the same length of sizes[1:]
+        which leaves out the last element. Tubles will be formed as follows:
+        (sizes[-1:][0],sizes[1:][0])
+        (sizes[-1:][1],sizes[1:][1])
+        (sizes[-1:][2],sizes[1:][2])
+        .
+        ,etc 
+        Tubles are splitted into variables x and y. Since sizes array tells how many neurons in each layer, 
+        we can figure out what are dimensions of metrices to store weights. The rule is logical as follows:
+        *Size of weights matrix (rows x columns) between layer (n) and layer (n-1) 
+                                = len(layer(n)) x len(layer(n-1))
+        """
+        
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
