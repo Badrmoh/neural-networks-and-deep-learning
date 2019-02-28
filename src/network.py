@@ -66,7 +66,18 @@ class Network(object):
         self-explanatory.  If ``test_data`` is provided then the
         network will be evaluated against the test data after each
         epoch, and partial progress printed out.  This is useful for
-        tracking progress, but slows things down substantially."""
+        tracking progress, but slows things down substantially.
+        
+        The training data is first randomly shuffled, then mini-batches are
+        taken. This is done after shuffling by reading out from training 
+        data a sub array of size "mini_batch_size", and move the index "k"
+        by that amount. That means "mini_batchs" is an array of sub arrays
+        of "training_data".
+
+        For every mini_batch in "mini_batches" array, the gradient decent
+        is calculated using backpropagation. It updates "self.weights" and
+        "self.biases" accordingly. 
+        """
         if test_data: n_test = len(test_data)
         n = len(training_data)
         for j in xrange(epochs):
@@ -77,10 +88,10 @@ class Network(object):
             for mini_batch in mini_batches:
                 self.update_mini_batch(mini_batch, eta)
             if test_data:
-                print "Epoch {0}: {1} / {2}".format(
+                print ("Epoch {0}: {1} / {2}").format(
                     j, self.evaluate(test_data), n_test)
             else:
-                print "Epoch {0} complete".format(j)
+                print ("Epoch {0} complete").format(j)
 
     def update_mini_batch(self, mini_batch, eta):
         """Update the network's weights and biases by applying

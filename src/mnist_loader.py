@@ -10,11 +10,16 @@ function usually called by our neural network code.
 
 #### Libraries
 # Standard library
-import cPickle
+import cPickle 
 import gzip
 
 # Third-party libraries
 import numpy as np
+import os
+
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+TOP_DIR = os.path.split(THIS_FOLDER)[0]
+DATA_PATH = os.path.join(TOP_DIR,'data/mnist.pkl.gz')
 
 def load_data():
     """Return the MNIST data as a tuple containing the training data,
@@ -39,7 +44,7 @@ def load_data():
     That's done in the wrapper function ``load_data_wrapper()``, see
     below.
     """
-    f = gzip.open('../data/mnist.pkl.gz', 'rb')
+    f = gzip.open(DATA_PATH, 'rb')
     training_data, validation_data, test_data = cPickle.load(f)
     f.close()
     return (training_data, validation_data, test_data)

@@ -8,5 +8,7 @@ biases = [np.random.randn(y, 1) for y in sizes[1:]]
 weights = [np.random.randn(y, x) for x, y in zip(sizes[:-1], sizes[1:])]
 for b, w in zip(biases, weights):
     a = sigmoid(np.dot(w, a)+b)    
-    print (a)
+    #print (a)
 
+x = (1,0)
+print (x[0])
